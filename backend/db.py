@@ -3,7 +3,8 @@ from sqlalchemy import create_engine, Column, Integer, String, Date
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-DATABASE_URL = "postgresql://user:pass@localhost/grad_assistant"
+# DATABASE_URL = "postgresql://username:password@localhost/grad_assistant"
+DATABASE_URL = "postgresql://postgres@localhost/grad_assistant"
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()

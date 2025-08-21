@@ -1,0 +1,32 @@
+# Python (backend)
+backend/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+backend/venv/
+env/
+*.sqlite3
+
+# Postgres files (optional)
+*.psql
+*.dump
+
+# Node / Next.js (frontend)
+node_modules/
+.next/
+out/
+dist/
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Logs
+logs/
+*.log
