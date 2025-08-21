@@ -96,8 +96,7 @@ grad-app/
 
 ---
 
-## .gitignore Highlights
-Future Improvements
+## Future Improvements
 Integrate AI-based SOP feedback
 Add email/calendar reminders for deadlines
 User authentication and profile management
