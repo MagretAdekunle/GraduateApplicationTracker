@@ -2,7 +2,7 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from db import get_db, Program
-from typing import List
+from typing import List, Dict
 
 app = FastAPI()
 
@@ -35,3 +35,8 @@ def match_programs(profile: dict, db: Session = Depends(get_db)):
 
     ranked = sorted(scored, key=lambda x: x["score"], reverse=True)
     return ranked
+
+@app.get("/college-info")
+def get_college_info(college_name: str):
+    data = get_college_info(college_name)
+    return {"data": data}
