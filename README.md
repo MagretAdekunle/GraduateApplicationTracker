@@ -97,7 +97,7 @@ grad-app/
 ---
 
 ## Future Improvements
-Integrate AI-based SOP feedback
-Add email/calendar reminders for deadlines
-User authentication and profile management
-Mobile-friendly U
+-  Integrate AI-based SOP feedback
+-  Add email/calendar reminders for deadlines
+-  User authentication and profile management
+-  Mobile-friendly U
