@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, MapPin, DollarSign, Tag, University, List, Grid, Plus, Search, Filter } from 'lucide-react';
 
-// Sample data - replace with your actual data source
+// Sample data - replace API/ Database
 const samplePrograms = [
   {
     id: 1,
@@ -82,6 +82,7 @@ function ProgramCard({ program }) {
       isOverdue ? 'border-red-300' : isUrgent ? 'border-yellow-300' : 'border-gray-200'
     }`}>
       <div className="p-4 sm:p-6">
+        {/* Program & University */}   
         <div className="flex flex-col sm:flex-row justify-between items-start mb-4 gap-3">
           <div className="flex-1 min-w-0">
             <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 truncate pr-2">{program.name}</h3>
@@ -94,6 +95,7 @@ function ProgramCard({ program }) {
               <span className="truncate">{program.location}</span>
             </div>
           </div>
+           {/* Status */}
           <div className="flex-shrink-0">
             <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${statusColors[program.status]}`}>
               {program.status}
@@ -102,6 +104,7 @@ function ProgramCard({ program }) {
         </div>
 
         <div className="space-y-3">
+          {/* Keywords */}
           <div className="flex items-center">
             <Calendar className="w-4 h-4 mr-2 text-gray-400 flex-shrink-0" />
             <span className={`text-xs sm:text-sm ${isOverdue ? 'text-red-600 font-medium' : isUrgent ? 'text-yellow-600 font-medium' : 'text-gray-600'}`}>
@@ -112,6 +115,7 @@ function ProgramCard({ program }) {
             </span>
           </div>
 
+          {/* Keywords */}
           <div className="flex items-start">
             <Tag className="w-4 h-4 mr-2 text-gray-400 mt-0.5 flex-shrink-0" />
             <div className="flex flex-wrap gap-1 min-w-0">
@@ -123,6 +127,7 @@ function ProgramCard({ program }) {
             </div>
           </div>
 
+          {/* Funding */}   
           <div className="flex items-start">
             <DollarSign className="w-4 h-4 mr-2 text-gray-400 mt-0.5 flex-shrink-0" />
             <div className="flex flex-wrap gap-1 min-w-0">
@@ -135,6 +140,7 @@ function ProgramCard({ program }) {
           </div>
         </div>
 
+        {/* Notes */}     
         {program.notes && (
           <div className="mt-4 p-3 bg-gray-50 rounded text-xs sm:text-sm text-gray-600">
             <strong>Notes:</strong> {program.notes}
@@ -155,18 +161,22 @@ function ProgramListItem({ program }) {
       isOverdue ? 'border-red-300' : isUrgent ? 'border-yellow-300' : 'border-gray-200'
     }`}>
       {/* Mobile Stack Layout */}
-      <div className="sm:hidden space-y-3">
+      <div className="sm:hidden space-y-2">
+        {/* Program & University  | Location */}
         <div className="flex items-start justify-between">
           <div className="flex-1 min-w-0">
             <h3 className="font-medium text-gray-900 text-sm">{program.name}</h3>
             <p className="text-xs text-gray-600">{program.university}</p>
             <p className="text-xs text-gray-500">{program.location}</p>
           </div>
+
+          {/* Status */}
           <span className={`px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ml-2 ${statusColors[program.status]}`}>
             {program.status}
           </span>
         </div>
-        
+
+        {/* Deadline */}
         <div className={`text-xs ${isOverdue ? 'text-red-600 font-medium' : isUrgent ? 'text-yellow-600 font-medium' : 'text-gray-600'}`}>
           <div className="flex items-center">
             <Calendar className="w-3 h-3 mr-1" />
@@ -177,6 +187,7 @@ function ProgramListItem({ program }) {
           </div>
         </div>
 
+        {/* Keywords*/}   
         <div className="space-y-2">
           <div className="flex flex-wrap gap-1">
             {program.keywords.slice(0, 4).map((keyword, index) => (
@@ -189,6 +200,7 @@ function ProgramListItem({ program }) {
             )}
           </div>
           
+          {/*Funding */}
           <div className="flex flex-wrap gap-1">
             {program.funding.slice(0, 3).map((fund, index) => (
               <span key={index} className="px-1.5 py-0.5 bg-green-100 text-green-800 text-xs rounded">
@@ -308,50 +320,50 @@ export default function Dashboard() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 sm:mb-8">
-          <div className="bg-white rounded-lg shadow p-3 sm:p-4 lg:p-6">
+          <div className="bg-white rounded-lg shadow p-2 sm:p-3">
             <div className="flex items-center">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <University className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-blue-600" />
+              <div className="p-1 sm:p-1.5 bg-blue-100 rounded-md">
+                <University className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
               </div>
-              <div className="ml-3 sm:ml-4 min-w-0">
-                <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Total</p>
-                <p className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900">{stats.total}</p>
+              <div className="ml-2 min-w-0">
+                <p className="text-xs font-medium text-gray-600 truncate">Total</p>
+                <p className="text-base sm:text-lg font-semibold text-gray-900">{stats.total}</p>
               </div>
             </div>
           </div>
           
-          <div className="bg-white rounded-lg shadow p-3 sm:p-4 lg:p-6">
+          <div className="bg-white rounded-lg shadow p-2 sm:p-3">
             <div className="flex items-center">
-              <div className="p-2 bg-gray-100 rounded-lg">
-                <Calendar className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-gray-600" />
+              <div className="p-1 sm:p-1.5 bg-gray-100 rounded-md">
+                <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600" />
               </div>
-              <div className="ml-3 sm:ml-4 min-w-0">
-                <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Not Started</p>
-                <p className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900">{stats.notStarted}</p>
+              <div className="ml-2 min-w-0">
+                <p className="text-xs font-medium text-gray-600 truncate">Not Started</p>
+                <p className="text-base sm:text-lg font-semibold text-gray-900">{stats.notStarted}</p>
               </div>
             </div>
           </div>
           
-          <div className="bg-white rounded-lg shadow p-3 sm:p-4 lg:p-6">
+          <div className="bg-white rounded-lg shadow p-2 sm:p-3">
             <div className="flex items-center">
-              <div className="p-2 bg-yellow-100 rounded-lg">
-                <Calendar className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-yellow-600" />
+              <div className="p-1 sm:p-1.5 bg-yellow-100 rounded-md">
+                <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-600" />
               </div>
-              <div className="ml-3 sm:ml-4 min-w-0">
-                <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">In Progress</p>
-                <p className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900">{stats.inProgress}</p>
+              <div className="ml-2 min-w-0">
+                <p className="text-xs font-medium text-gray-600 truncate">In Progress</p>
+                <p className="text-base sm:text-lg font-semibold text-gray-900">{stats.inProgress}</p>
               </div>
             </div>
           </div>
           
-          <div className="bg-white rounded-lg shadow p-3 sm:p-4 lg:p-6">
+          <div className="bg-white rounded-lg shadow p-2 sm:p-3">
             <div className="flex items-center">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <Calendar className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-green-600" />
+              <div className="p-1 sm:p-1.5 bg-green-100 rounded-md">
+                <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-green-600" />
               </div>
-              <div className="ml-3 sm:ml-4 min-w-0">
-                <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Submitted</p>
-                <p className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900">{stats.submitted}</p>
+              <div className="ml-2 min-w-0">
+                <p className="text-xs font-medium text-gray-600 truncate">Submitted</p>
+                <p className="text-base sm:text-lg font-semibold text-gray-900">{stats.submitted}</p>
               </div>
             </div>
           </div>
