@@ -39,7 +39,7 @@ The backend is built with **FastAPI** and **PostgreSQL**, and the frontend uses 
 cd backend
 python3 -m venv venv              # create virtual environment
 source venv/bin/activate          # activate venv
-pip install -r requirements.txt.  # install dependencies
+npm install                       # install dependencies  
 python seed.py                    # seed database
 uvicorn main:app --reload         # start backend
 ```
