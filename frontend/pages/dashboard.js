@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Calendar, MapPin, DollarSign, Tag, University, List, Grid, Plus, Search, Filter } from 'lucide-react';
+import ProgramDetailPage from './ProgramDetailPage';
 
-// Sample data - replace API/ Database
+// Sample data - replace API/database with this
 const samplePrograms = [
   {
     id: 1,
@@ -72,17 +73,19 @@ function getDaysUntilDeadline(deadline) {
   return daysDiff;
 }
 
-function ProgramCard({ program }) {
+function ProgramCard({ program, onClick }) {
   const daysLeft = getDaysUntilDeadline(program.deadline);
   const isUrgent = daysLeft <= 30 && daysLeft > 0;
   const isOverdue = daysLeft < 0;
 
   return (
-    <div className={`bg-white rounded-lg shadow-md border hover:shadow-lg transition-shadow duration-200 ${
-      isOverdue ? 'border-red-300' : isUrgent ? 'border-yellow-300' : 'border-gray-200'
-    }`}>
+    <div 
+      className={`bg-white rounded-lg shadow-md border hover:shadow-lg transition-all duration-200 cursor-pointer hover:scale-[1.02] ${
+        isOverdue ? 'border-red-300' : isUrgent ? 'border-yellow-300' : 'border-gray-200'
+      }`}
+      onClick={() => onClick(program)}
+    >
       <div className="p-4 sm:p-6">
-        {/* Program & University */}   
         <div className="flex flex-col sm:flex-row justify-between items-start mb-4 gap-3">
           <div className="flex-1 min-w-0">
             <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 truncate pr-2">{program.name}</h3>
@@ -95,7 +98,6 @@ function ProgramCard({ program }) {
               <span className="truncate">{program.location}</span>
             </div>
           </div>
-           {/* Status */}
           <div className="flex-shrink-0">
             <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${statusColors[program.status]}`}>
               {program.status}
@@ -104,7 +106,6 @@ function ProgramCard({ program }) {
         </div>
 
         <div className="space-y-3">
-          {/* Keywords */}
           <div className="flex items-center">
             <Calendar className="w-4 h-4 mr-2 text-gray-400 flex-shrink-0" />
             <span className={`text-xs sm:text-sm ${isOverdue ? 'text-red-600 font-medium' : isUrgent ? 'text-yellow-600 font-medium' : 'text-gray-600'}`}>
@@ -115,7 +116,6 @@ function ProgramCard({ program }) {
             </span>
           </div>
 
-          {/* Keywords */}
           <div className="flex items-start">
             <Tag className="w-4 h-4 mr-2 text-gray-400 mt-0.5 flex-shrink-0" />
             <div className="flex flex-wrap gap-1 min-w-0">
@@ -127,7 +127,6 @@ function ProgramCard({ program }) {
             </div>
           </div>
 
-          {/* Funding */}   
           <div className="flex items-start">
             <DollarSign className="w-4 h-4 mr-2 text-gray-400 mt-0.5 flex-shrink-0" />
             <div className="flex flex-wrap gap-1 min-w-0">
@@ -140,7 +139,6 @@ function ProgramCard({ program }) {
           </div>
         </div>
 
-        {/* Notes */}     
         {program.notes && (
           <div className="mt-4 p-3 bg-gray-50 rounded text-xs sm:text-sm text-gray-600">
             <strong>Notes:</strong> {program.notes}
@@ -151,32 +149,31 @@ function ProgramCard({ program }) {
   );
 }
 
-function ProgramListItem({ program }) {
+function ProgramListItem({ program, onClick }) {
   const daysLeft = getDaysUntilDeadline(program.deadline);
   const isUrgent = daysLeft <= 30 && daysLeft > 0;
   const isOverdue = daysLeft < 0;
 
   return (
-    <div className={`bg-white border rounded p-3 sm:p-4 hover:shadow-sm transition-shadow duration-200 ${
-      isOverdue ? 'border-red-300' : isUrgent ? 'border-yellow-300' : 'border-gray-200'
-    }`}>
+    <div 
+      className={`bg-white border rounded p-3 sm:p-4 hover:shadow-sm transition-all duration-200 cursor-pointer hover:bg-gray-50 ${
+        isOverdue ? 'border-red-300' : isUrgent ? 'border-yellow-300' : 'border-gray-200'
+      }`}
+      onClick={() => onClick(program)}
+    >
       {/* Mobile Stack Layout */}
-      <div className="sm:hidden space-y-2">
-        {/* Program & University  | Location */}
+      <div className="sm:hidden space-y-3">
         <div className="flex items-start justify-between">
           <div className="flex-1 min-w-0">
             <h3 className="font-medium text-gray-900 text-sm">{program.name}</h3>
             <p className="text-xs text-gray-600">{program.university}</p>
             <p className="text-xs text-gray-500">{program.location}</p>
           </div>
-
-          {/* Status */}
           <span className={`px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ml-2 ${statusColors[program.status]}`}>
             {program.status}
           </span>
         </div>
-
-        {/* Deadline */}
+        
         <div className={`text-xs ${isOverdue ? 'text-red-600 font-medium' : isUrgent ? 'text-yellow-600 font-medium' : 'text-gray-600'}`}>
           <div className="flex items-center">
             <Calendar className="w-3 h-3 mr-1" />
@@ -187,7 +184,6 @@ function ProgramListItem({ program }) {
           </div>
         </div>
 
-        {/* Keywords*/}   
         <div className="space-y-2">
           <div className="flex flex-wrap gap-1">
             {program.keywords.slice(0, 4).map((keyword, index) => (
@@ -200,7 +196,6 @@ function ProgramListItem({ program }) {
             )}
           </div>
           
-          {/*Funding */}
           <div className="flex flex-wrap gap-1">
             {program.funding.slice(0, 3).map((fund, index) => (
               <span key={index} className="px-1.5 py-0.5 bg-green-100 text-green-800 text-xs rounded">
@@ -281,7 +276,22 @@ export default function Dashboard() {
   const [viewMode, setViewMode] = useState('cards'); // 'cards' or 'list'
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [selectedProgram, setSelectedProgram] = useState(null);
 
+  // Handle program click
+  const handleProgramClick = (program) => {
+    setSelectedProgram(program);
+  };
+
+  // Handle back to dashboard
+  const handleBackToDashboard = () => {
+    setSelectedProgram(null);
+  };
+
+  // If a program is selected, show the detail view
+  if (selectedProgram) {
+    return <ProgramDetailPage program={selectedProgram} onBack={handleBackToDashboard} />;
+  }
 
   // Filter programs based on search and status
   const filteredPrograms = programs.filter(program => {
@@ -544,8 +554,8 @@ export default function Dashboard() {
           }>
             {sortedPrograms.map(program => (
               viewMode === 'cards' 
-                ? <ProgramCard key={program.id} program={program} />
-                : <ProgramListItem key={program.id} program={program} />
+                ? <ProgramCard key={program.id} program={program} onClick={handleProgramClick} />
+                : <ProgramListItem key={program.id} program={program} onClick={handleProgramClick} />
             ))}
           </div>
         )}
